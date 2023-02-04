@@ -26,6 +26,25 @@ def DFS(y, x, map):
                 DFS(y+i[0], x+i[1], map)
 
 
+def BFS(y, x, map):
+    size = 0
+    if (isMovealbe(y, x, map)):
+        map[y][x][1] = 1
+        queue = [[y, x]]
+        size += 1
+
+        while (queue):
+            pos = queue.pop(0)
+            for i in moveable:
+                curretY = pos[0] + i[0]
+                curretX = pos[1] + i[1]
+                if (isMovealbe(curretY, curretX, map)):
+                    size += 1
+                    map[curretY][curretX][1] = 1
+                    queue.append([curretY, curretX])
+    return size
+
+
 for i in range(K):
     x1, y1, x2, y2 = map(int, input().split())
     for x in range(x1, x2):
@@ -34,7 +53,8 @@ for i in range(K):
 
 for y in range(N):
     for x in range(M):
-        DFS(y, x, maps)
+        # DFS(y, x, maps)
+        size = BFS(y, x, maps)
         if (size > 0):
             sizes.append(size)
             size = 0
