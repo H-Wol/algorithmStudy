@@ -15,5 +15,3 @@ def getSugar(N):
 
 
 print(getSugar(N))
-4
-4
