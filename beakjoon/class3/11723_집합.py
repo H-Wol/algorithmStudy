@@ -3,7 +3,7 @@ input = sys.stdin.readline
 
 M = int(input())
 
-answer = 0b0000000000000000000
+answer = 0
 
 
 def add(ans, x):
