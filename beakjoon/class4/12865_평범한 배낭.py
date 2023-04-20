@@ -21,4 +21,3 @@ for i in range(1, N + 1):
         else:
             arr[i][j] = max(val + arr[i - 1][j - w], arr[i - 1][j])
 print(arr[N][K])
-print(arr)
