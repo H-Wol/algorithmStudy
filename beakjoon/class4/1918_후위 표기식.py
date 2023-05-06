@@ -5,7 +5,6 @@ sen = stdin.readline().rstrip()
 answers = []
 exps = []
 
-
 exp_score = {"+": 0, "-": 0, "*": 1, "/": 1, "(": 2, ")": 2}
 
 for s in sen:
