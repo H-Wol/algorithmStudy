@@ -1,20 +1,20 @@
 from glob import glob
-from os import environ
+from os import getenv
 from re import findall
 from requests import get
 from datetime import date
 from urllib.parse import quote
 from notion_client import Client
 
-commit_message = environ["GITHUB_HEAD_REF"]
+commit_message = getenv("GITHUB_HEAD_REF")
 problem_num = findall(r"\d+", commit_message)[0]
 
 response = get(
     f"https://solved.ac/api/v3/problem/show?problemId={problem_num}", headers={"Accept": "application/json"}
 )
 
-repo = environ["GITHUB_REPOSITORY"]
-branch = environ["GITHUB_REF"].split("/")[-1]
+repo = getenv("GITHUB_REPOSITORY")
+branch = getenv("GITHUB_REF").split("/")[-1]
 
 filename = quote(glob(f"**/{11286}_*.py", recursive=True)[0])
 
@@ -36,8 +36,8 @@ title = f"{problem_num}_{json_data['titleKo']}"
 
 now_date = date.today().strftime("%Y-%m-%d")
 
-notion = Client(auth=environ["NOTION_TOKEN"])
-database_id = environ["DATABASE_ID"]
+notion = Client(auth=getenv("NOTION_TOKEN"))
+database_id = getenv("DATABASE_ID")
 
 new_record = {
     "상태": {"type": "select", "select": {"name": "해결"}},
@@ -45,7 +45,7 @@ new_record = {
     "단계": {"type": "multi_select", "multi_select": [{"name": f"{core} {level}"}]},
     "날짜": {"type": "date", "date": {"start": now_date, "end": None, "time_zone": None}},
     "깃헙 링크": {"type": "url", "url": f"https://github.com/{repo}/blob/{branch}/{filename}"},
-    "사람": {"type": "people", "people": [{"object": "user", "id": environ["NOTION_SELF_ID"]}]},
+    "사람": {"type": "people", "people": [{"object": "user", "id": getenv("NOTION_SELF_ID")}]},
     "출처": {"type": "multi_select", "multi_select": [{"name": "백준"}]},
     "알고리즘 분류": {"type": "multi_select", "multi_select": algos},
     "문제명": {
