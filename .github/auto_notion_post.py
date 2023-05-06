@@ -7,6 +7,7 @@ from urllib.parse import quote
 from notion_client import Client
 
 commit_message = getenv("GITHUB_HEAD_REF")
+print(commit_message)
 problem_num = findall(r"\d+", commit_message)[0]
 
 response = get(

@@ -27,4 +27,4 @@ jobs:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
           NOTION_SELF_ID: ${{ secrets.NOTION_SELF_ID }}
-        run: python .github/auto_notion_post.py
+        run: python -u .github/auto_notion_post.py
