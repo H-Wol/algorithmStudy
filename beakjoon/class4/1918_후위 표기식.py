@@ -1,10 +1,9 @@
 from sys import stdin
-from collections import deque
 
 sen = stdin.readline().rstrip()
 
 answers = []
-exps = deque([])
+exps = []
 
 
 exp_score = {"+": 0, "-": 0, "*": 1, "/": 1, "(": 2, ")": 2}
