@@ -1,6 +1,7 @@
 from sys import stdin
 
 sen = stdin.readline().rstrip()
+
 answers = []
 exps = []
 
