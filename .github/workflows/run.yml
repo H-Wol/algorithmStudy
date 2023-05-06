@@ -23,7 +23,7 @@ jobs:
           pip install -r .github/requirements.txt
       - name: Run Python Script
         env:
-          GITHUB_HEAD_REF: ${{ github.event.head_commit.message }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
           NOTION_SELF_ID: ${{ secrets.NOTION_SELF_ID }}
