@@ -7,7 +7,6 @@ from urllib.parse import quote
 from notion_client import Client
 
 commit_message = getenv("COMMIT_MESSAGE")
-print(commit_message)
 problem_num = findall(r"\d+", commit_message)[0]
 
 response = get(
