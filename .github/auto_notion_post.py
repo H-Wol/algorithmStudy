@@ -17,7 +17,7 @@ response = get(
 repo = getenv("GITHUB_REPOSITORY")
 branch = getenv("GITHUB_REF").split("/")[-1]
 
-filename = quote(glob(f"**/{11286}_*.py", recursive=True)[0])
+filename = quote(glob(f"**/{problem_num}_*.py", recursive=True)[0])
 
 json_data = response.json()
 
