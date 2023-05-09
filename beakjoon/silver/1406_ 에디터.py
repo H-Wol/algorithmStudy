@@ -1,3 +1,8 @@
+from sys import stdin
+
+input = stdin.readline
+
+
 class Node:
     def __init__(self, data, next=None, front=None):
         self.data = data
@@ -5,13 +10,10 @@ class Node:
         self.front = front
 
 
-from sys import stdin
-
-input = stdin.readline
-
-
 datas = list(input().rstrip())
 nodes = [Node(datas[0])]
+HEAD = nodes[0]
+
 for i in range(1, len(datas)):
     node = Node(datas[i], None, nodes[i - 1])
     nodes.append(node)
@@ -21,9 +23,7 @@ node = Node(None, None, nodes[-1])
 nodes.append(node)
 nodes[-2].next = node
 
-
 cur = nodes[-1]
-HEAD = nodes[0]
 
 M = int(input())
 
