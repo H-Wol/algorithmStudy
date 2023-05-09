@@ -85,7 +85,9 @@ for _ in range(M):
 if HEAD == None or HEAD.data == None:
     print("")
     exit()
+
 answer = []
+
 while True:
     answer.append(HEAD.data)
     HEAD = HEAD.next
