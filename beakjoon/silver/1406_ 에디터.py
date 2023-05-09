@@ -15,13 +15,13 @@ nodes = [Node(datas[0])]
 HEAD = nodes[0]
 
 for i in range(1, len(datas)):
-    node = Node(datas[i], None, nodes[i - 1])
+    node = Node(datas[i], None, nodes[-1])
+    nodes[-1].next = node
     nodes.append(node)
-    nodes[i - 1].next = node
 
 node = Node(None, None, nodes[-1])
+nodes[-1].next = node
 nodes.append(node)
-nodes[-2].next = node
 
 cur = nodes[-1]
 
