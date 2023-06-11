@@ -1,24 +1,36 @@
-from glob import glob
-from os import getenv
+# from glob import glob
+from os import getenv, path
 from re import findall
 from requests import get
-from datetime import date
+from datetime import datetime
 from urllib.parse import quote
 from notion_client import Client
+from pytz import timezone
 
 commit_message = getenv("COMMIT_MESSAGE")
 problem_num = findall(r"\d+", commit_message)[0]
 
-response = get(
-    f"https://solved.ac/api/v3/problem/show?problemId={problem_num}", headers={"Accept": "application/json"}
-)
 
 repo = getenv("GITHUB_REPOSITORY")
 branch = getenv("GITHUB_REF").split("/")[-1]
 
-filename = quote(glob(f"**/{problem_num}_*.py", recursive=True)[0])
+file_list_path = "changed_files.txt"
+filename = None
+with open(file_list_path, "r") as f:
+    for line in f:
+        file_name = line.strip()
+        if int(problem_num) in map(int, (findall("[0-9]+", path.basename(file_name)))):
+            filename = quote(file_name)
+            break
 
-json_data = response.json()
+if filename == None:
+    raise Exception("File is not exist")
+
+
+json_data = get(
+    f"https://solved.ac/api/v3/problem/show?problemId={problem_num}", headers={"Accept": "application/json"}
+).json()
+
 
 algos = []
 for tag in json_data.get("tags"):
@@ -34,7 +46,15 @@ level = levels[N % 5]
 
 title = f"{problem_num}_{json_data['titleKo']}"
 
-now_date = date.today().strftime("%Y-%m-%d")
+
+commit_timestamp = getenv("GITHUB_EVENT_HEAD_COMMIT_TIMESTAMP")
+commit_datetime = datetime.fromisoformat(commit_timestamp)
+
+kst = timezone("Asia/Seoul")
+commit_datetime_kst = commit_datetime.astimezone(kst)
+
+
+now_date = commit_datetime_kst.strftime("%Y-%m-%d")
 
 notion = Client(auth=getenv("NOTION_TOKEN"))
 database_id = getenv("DATABASE_ID")
