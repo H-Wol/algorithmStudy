@@ -1,4 +1,3 @@
-# from glob import glob
 from os import getenv, path
 from re import findall
 from requests import get
