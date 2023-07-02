@@ -13,23 +13,30 @@ def moveable(x: int):
 
 def BFS(start, end, maps, visited):
     if start == end:
-        return 0
+        return [0]
     queue = deque([start])
     maps[start] = 0
-    while queue:
-        cur = queue.popleft()
-        for next, val in moveable(cur):
-            if 200_001 < next or next < 0 or visited[next]:
-                continue
-            if next == end:
-                return maps[cur] + val
-            maps[next] = min(maps[next], maps[cur] + val)
-            visited[next] = True
-            if val:
-                queue.append(next)
-            else:
-                queue.appendleft(next)
-    return -1
+    ans = set()
+    flag = True
+    while queue and flag:
+        step = len(queue)
+        for _ in range(step):
+            cur = queue.popleft()
+            for next, val in moveable(cur):
+                if 200_001 < next or next < 0 or visited[next]:
+                    continue
+                if next == end:
+                    ans.add(maps[cur] + val)
+                    flag = False
+                    continue
+                maps[next] = min(maps[next], maps[cur] + val)
+                visited[next] = True
+                if val:
+                    queue.append(next)
+                else:
+                    step += 1
+                    queue.appendleft(next)
+    return ans
 
 
-print(BFS(N, K, maps, visited))
+print(min(BFS(N, K, maps, visited)))
