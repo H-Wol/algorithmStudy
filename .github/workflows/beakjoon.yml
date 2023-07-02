@@ -1,9 +1,9 @@
-name: Run Python Script
+name: Auto post to notion
 
 on:
   push:
     paths:
-      - "beakjoon/**" ##change me
+      - "baekjoon/**" ##change me
     branches:
       - main
 
@@ -30,7 +30,7 @@ jobs:
           git_path=$(which git)
           $git_path config --global core.quotepath False
           $git_path  diff --name-only ${{ github.event.before }} ${{ github.sha }} > changed_files.txt
-      - name: Run Python Script
+      - name: Auto post to notion
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
