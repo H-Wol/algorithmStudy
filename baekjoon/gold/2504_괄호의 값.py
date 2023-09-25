@@ -3,31 +3,65 @@ from sys import stdin
 input = stdin.readline
 
 
-n = int(input())
-solutions = list(map(int, input().split()))
+def evaluate_brackets(s):
+    stack = []
 
-
-def solve(arr):
-    n = len(arr)
-    left, right = 0, n - 1
-    min_diff = float("inf")
-    result = (0, 0)
-
-    while left < right:
-        current_sum = arr[left] + arr[right]
-        current_diff = abs(current_sum)
-
-        if current_diff < min_diff:
-            min_diff = current_diff
-            result = (arr[left], arr[right])
-
-        if current_sum < 0:
-            left += 1
+    for char in s:
+        if char == "(" or char == "[":
+            stack.append(char)
+        elif char == ")":
+            temp = 0
+            flag = True
+            while stack:
+                top = stack.pop()
+                if top == "(":
+                    flag = False
+                    if temp == 0:
+                        stack.append(2)
+                    else:
+                        stack.append(temp * 2)
+                    break
+                elif top == "[":
+                    print(0)
+                    return
+                else:
+                    temp += top
+            if flag:
+                print(0)
+                return
+        elif char == "]":
+            temp = 0
+            flag = True
+            while stack:
+                top = stack.pop()
+                if top == "[":
+                    flag = False
+                    if temp == 0:
+                        stack.append(3)
+                    else:
+                        stack.append(temp * 3)
+                    break
+                elif top == "(":
+                    print(0)
+                    return
+                else:
+                    temp += top
+            if flag:
+                print(0)
+                return
         else:
-            right -= 1
+            print(0)
+            return
 
-    return result
+    result = 0
+    for item in stack:
+        if item == "(" or item == "[":
+            print(0)
+            return
+        result += item
+
+    print(result)
 
 
-result = solve(solutions)
-print(result[0], result[1])
+brackets = input().strip()
+evaluate_brackets(brackets)
