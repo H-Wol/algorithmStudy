@@ -162,3 +162,5 @@ cython_debug/
 launch.json
 
 settings.json
+
+.DS_Store
