@@ -6,4 +6,4 @@ input = stdin.readline
 N, K = map(int, input().split())
 numbers = list(map(int, input().split()))
 numbers.sort()
-numbers
+print(numbers[K-1])
