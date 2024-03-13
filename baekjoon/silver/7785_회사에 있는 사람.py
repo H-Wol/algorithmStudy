@@ -15,5 +15,4 @@ for _ in range(n):
 
 result = sorted(log, reverse=True)
 
-for name in result:
-    print(name)
+print(*result)
